@@ -1,0 +1,36 @@
+{
+  "name": "cachet-insight-status",
+  "version": "1.0.0",
+  "description": "Update the status of Insight servers on a Cachet Status Page",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "@ostlerdev/cachetapi": "^1.0.3",
+    "insight-explorer": "^1.0.8"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.51",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "babel-core": "^7.0.0-bridge.0",
+    "jest": "^23.2.0"
+  },
+  "scripts": {
+    "start": "node lib/index.js",
+    "test": "jest",
+    "compile": "./node_modules/.bin/babel -d lib/ src/",
+    "prepare": "npm run compile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oipwg/cachet-insight-status.git"
+  },
+  "author": "Sky Young <sky@alexandria.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oipwg/cachet-insight-status/issues"
+  },
+  "homepage": "https://github.com/oipwg/cachet-insight-status#readme"
+}

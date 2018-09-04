@@ -1,0 +1,28 @@
+{
+	"cachet": {
+		"url": "https://status.alexandria.io/api",
+		"apiToken": "I0DqR9tY78T791tViboh"
+	},
+	"insights": [
+		{
+			"name": "Alexandria Flo (Livenet)",
+			"component_id": 2,
+			"api": "https://flosight.failover.alexandria.io/api"
+		},
+		{
+			"name": "Alexandria Flo (Testnet)",
+			"component_id": 1,
+			"api": "https://flosight.mk1.alexandria.io/api"
+		},
+		{
+			"name": "Flocha.in (Livenet)",
+			"component_id": 22,
+			"api": "https://livenet.flocha.in/api"
+		},
+		{
+			"name": "Flocha.in (Testnet)",
+			"component_id": 23,
+			"api": "https://testnet.flocha.in/api"
+		}
+	]
+}
