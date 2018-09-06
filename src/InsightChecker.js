@@ -64,9 +64,9 @@ export default class InsightChecker {
 
 		if (status){
 			try {
-				await this.updateStatus(status)
-
 				console.log(getDateString() + " | " + this._name + " | " + status)
+
+				await this.updateStatus(status)
 			} catch(e){
 				console.warn(getDateString() + " | " + this._name + " | Unable to update status! \n" + e)
 			}
@@ -77,23 +77,6 @@ export default class InsightChecker {
 		return
 	}
 	async checkStatus(){
-		let current_date = new Date()
-
-		let current_year = current_date.getFullYear()
-		// Add one because date months start at 0 (i.e., January is 0)
-		let current_month = current_date.getMonth() + 1
-		let current_day = current_date.getDate()
-
-		// Add on a starting 0 if we are less than 10
-		if (current_month < 10)
-			current_month = "0" + current_month.toString()
-
-		// Add on a starting 0 if we are less than 10
-		if (current_day < 10)
-			current_day = "0" + current_day.toString()
-
-		let date_string = `${current_year}-${current_month}-${current_day}`
-
 		let blocks
 
 		try {
@@ -107,8 +90,10 @@ export default class InsightChecker {
 		if (!blocks.blocks[0])
 			return "blocks_offline"
 
-		let last_block_timestamp = blocks.blocks[0].time
+		let current_date = new Date()
 		let current_timestamp = parseInt(current_date.getTime() / 1000)
+
+		let last_block_timestamp = blocks.blocks[0].time
 
 		// Check if the blocks have stopped syncing
 		if (current_timestamp - last_block_timestamp >= this._blocks_offline_after)
