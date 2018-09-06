@@ -18,7 +18,7 @@
     "jest": "^23.2.0"
   },
   "scripts": {
-    "start": "node lib/index.js",
+    "start": "npm run compile && node lib/index.js",
     "test": "jest",
     "compile": "./node_modules/.bin/babel -d lib/ src/",
     "prepare": "npm run compile"
