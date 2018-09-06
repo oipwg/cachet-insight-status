@@ -37,6 +37,7 @@ export default class InsightChecker {
 	 * @param {Integer} options.component_id - The Component ID (in Cachet) for the insight service
 	 * @param {Integer} options.blocks_offline_after - The number of seconds after which the blocks will be considered to be not syncing
 	 * @param {Integer} options.check_interval - The interval (in seconds) to update Cachet with the latest status.
+	 * @param {Integer} [options.report_offline_after=5] - After the status is reported this amount of times, an incident will be opened/updated (i.e., after it is offline 5 consecutive times, then report that it is offline)
 	 */
 	constructor(options){
 		this._cachet = options.cachet
@@ -46,6 +47,9 @@ export default class InsightChecker {
 		this._component_id = options.component_id
 		this._blocks_offline_after = options.blocks_offline_after
 		this._check_interval = options.check_interval
+		this._report_offline_after = options.report_offline_after || 5
+
+		this.offline_in_a_row = 0
 
 		if (this._check_interval){
 			this.check_interval_timer = setInterval(this.runUpdateCycle.bind(this), this._check_interval * 1000)
@@ -80,8 +84,11 @@ export default class InsightChecker {
 		let blocks
 
 		try {
-			blocks = await this._insight.getBlockSummary(1, date_string)
+			blocks = await this._insight.getBlockSummary(1)
+
+			this.offline_in_a_row = 0
 		} catch (e) {
+			this.offline_in_a_row += 1
 			// If there is an error getting the block summary, the service is offline.
 			return "offline"
 		}
@@ -109,7 +116,7 @@ export default class InsightChecker {
 			})
 		}
 
-		if (status === "offline"){
+		if (status === "offline" && this.offline_in_a_row >= this._report_offline_after){
 			return await this.updateIncident(INCIDENT_STATUSES.Investigating, {
 				name: "Unable to reach Server",
 				message: "Unable to reach Server!\n\nThe following services for this API may be offline: \n     - Address Balance Lookup\n     - Sending Transactions\n     - Recieving Transactions",
