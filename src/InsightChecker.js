@@ -149,7 +149,7 @@ export default class InsightChecker {
 				enabled: 1
 			})
 
-			console.log(this._name + " | Updated Component Status!")
+			console.log(getDateString() + " | " + this._name + " | Updated Component Status!")
 		}
 
 		return true
@@ -194,7 +194,7 @@ export default class InsightChecker {
 				status: new_status
 			})
 
-			console.log(this._name + " | Added an Incident Update!")
+			console.log(getDateString() + " | " + this._name + " | Added an Incident Update!")
 
 			// Make sure the component has the latest status
 			await this.updateComponent(INCIDENT_STATUS_TO_COMPONENT_STATUS[new_status])
@@ -218,7 +218,7 @@ export default class InsightChecker {
 				component_status: INCIDENT_STATUS_TO_COMPONENT_STATUS[new_status]
 			})
 
-			console.log(this._name + " | Added a new Incident!")
+			console.log(getDateString() + " | " + this._name + " | Added a new Incident!")
 
 			return true
 		}
